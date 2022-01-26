@@ -1,12 +1,19 @@
-import type { NextPage } from 'next'
+import queryClient from "frontend/api/reactQuery/queryClient";
+import Global from "frontend/components/Groups";
+import * as React from "react"
+import { QueryClientProvider }from "react-query";
 
+interface IProps {
 
-const Home: NextPage = () => {
-  return (
-    <h1 className="text-3xl font-bold underline">
-    Hello world!
-  </h1>
-  )
 }
 
-export default Home
+const App : React.FC<IProps> = () => {
+
+    return (
+        <QueryClientProvider client={queryClient}>
+            <Global />
+        </QueryClientProvider>
+    )
+}
+
+export default App;
