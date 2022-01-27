@@ -1,5 +1,5 @@
 import queryClient from "frontend/api/reactQuery/queryClient";
-import Global from "frontend/components/Groups";
+import Groups from "frontend/components/Groups";
 import * as React from "react"
 import { QueryClientProvider }from "react-query";
 
@@ -11,7 +11,7 @@ const App : React.FC<IProps> = () => {
 
     return (
         <QueryClientProvider client={queryClient}>
-            <Global />
+            <Groups />
         </QueryClientProvider>
     )
 }
