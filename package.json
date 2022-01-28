@@ -7,10 +7,10 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "migration": "npx prisma dev migrate",
+    "migration": "npx prisma migrate",
     "studio": "npx prisma studio",
     "generate": "npx prisma generate",
-    "schema": "npx prisma db push"
+    "schema": "npx prisma db pull"
   },
   "dependencies": {
     "@prisma/client": "^3.8.1",

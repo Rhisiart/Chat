@@ -1,11 +1,11 @@
-import { IGroups } from "frontend/models/groups";
+import { IGroup } from "frontend/models/group";
 import * as React from "react"
 import GroupList, { IGroupList } from "./GroupList";
 import SearchBar from "./SearchBar";
 
 
 interface IProps {
-    groups : IGroups[]
+    groups : IGroup[]
 }
 
 const Groups : React.FC<IProps> = ({groups}) => {

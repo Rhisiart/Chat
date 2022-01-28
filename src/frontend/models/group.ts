@@ -1,4 +1,4 @@
-export interface IGroups 
+export interface IGroup 
 {
     id : number,
     name : string

@@ -1,9 +1,9 @@
-import { IGroups } from "frontend/models/groups";
+import { IGroup } from "frontend/models/group";
 import * as React from "react"
 import Group from "./Group";
 
 interface IProps {
-    groups : IGroups[]
+    groups : IGroup[]
 }
 
 export interface IGroupList {
@@ -11,7 +11,7 @@ export interface IGroupList {
 } 
 
 const GroupList = React.forwardRef<IGroupList, IProps>(({groups}, ref) => {
-    const [groupsList, setGroupsList] = React.useState<IGroups[]>(groups);
+    const [groupsList, setGroupsList] = React.useState<IGroup[]>(groups);
 
     const filterGroupList = React.useCallback((text : string | undefined) => {
         setGroupsList(text ? groups.filter(group => group.name.toLocaleLowerCase().indexOf(text) > -1 || group.name.indexOf(text) > -1 || group.name.toLocaleUpperCase().indexOf(text) > -1) : groups);
@@ -25,7 +25,7 @@ const GroupList = React.forwardRef<IGroupList, IProps>(({groups}, ref) => {
         <div>
            {
                groupsList.map(group => {
-                   return <Group key={group.id} name={group.name} />
+                   return <Group key={group.id} group={group} />
                })
            }
         </div>
