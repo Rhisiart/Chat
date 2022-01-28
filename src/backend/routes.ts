@@ -28,7 +28,7 @@ router.post("/groups/users", createGroupAndAddUsers.handle);
 router.get("/groups/users/:id", readGroupsByUser.handle);
 router.get("/groups", ReadGroups.handle);
 router.post("/group", addUserToGroup.handle);
-router.post("/message", CreateMessagePerGroup.handle);
-router.get("/message", ReadMessagesPerGroup.handle);
+router.post("/messages", CreateMessagePerGroup.handle);
+router.get("/messages/:groupId", ReadMessagesPerGroup.handle);
 
 export { router }; 

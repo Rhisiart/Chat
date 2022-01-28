@@ -1,10 +1,11 @@
+import getMessagePerGroup from "frontend/api/requests/getGroupMessages";
 import getGroupsByuser from "frontend/api/requests/getGroupsByUser";
 import Chat from "frontend/components/Chat";
 import Groups from "frontend/components/Groups";
 import { GroupContextProvider, useGlobalContext } from "frontend/context/GroupContext";
-import { IMessage } from "frontend/models/Message";
 import { GetServerSideProps, InferGetServerSidePropsType } from "next";
 import * as React from "react"
+import useSWR from "swr";
 
 export const getServerSideProps : GetServerSideProps = async (context) => {
     if(!context.params) return { props : { error : undefined }};
@@ -25,21 +26,7 @@ export const getServerSideProps : GetServerSideProps = async (context) => {
 export default function User({groups} : InferGetServerSidePropsType<typeof getServerSideProps>) {
     const { groupSelected } = useGlobalContext();
 
-    const [messages, setMessages] = React.useState<IMessage[]>();
-
-    const getMessagesPerGroup = React.useCallback(async () => {
-        try {
-            
-        } catch (error) {
-            console.log(error);
-        }
-    }, []);
-    
-    React.useEffect(() => {
-        if(!groupSelected) return;
-
-        getMessagesPerGroup()
-    }, [getMessagesPerGroup, groupSelected])
+    const { data, error } = useSWR(groupSelected ? ["/messages", groupSelected.id] : null, getMessagePerGroup);
 
     return (
         <GroupContextProvider>
@@ -48,9 +35,9 @@ export default function User({groups} : InferGetServerSidePropsType<typeof getSe
                     <Groups groups={groups}/>
                 </div>
                 {
-                    messages ? 
+                    data ? 
                         <div>
-                            <Chat messages={messages}/>
+                            <Chat messages={data} />
                         </div> 
                     :
                         null

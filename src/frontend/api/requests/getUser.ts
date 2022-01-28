@@ -1,4 +1,4 @@
-import { IUser } from "frontend/models/User";
+import { IUser } from "frontend/models/user";
 import axios from "../axios/axios"
 
 const getUsers = async () : Promise<IUser[] | undefined> => {

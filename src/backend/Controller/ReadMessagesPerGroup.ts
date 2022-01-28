@@ -4,13 +4,13 @@ import { prismaClient } from "../database/prismaClient";
 
 export class ReadMessagesPerGroupController {
   async handle(request: Request, response: Response) {
-    const { groupId } = request.body;
+    const { groupId } = request.params;
 
     const user = await prismaClient.message.findMany({
       where: {
         chat : {
             some : {
-                groupId : groupId
+                groupId : Number(groupId)
             }
         }
       },
