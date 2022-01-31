@@ -6,6 +6,7 @@ import { CreateMessagePerGroupController } from "./Controller/CreateMessageContr
 import { CreateUserController } from "./Controller/CreateUserController";
 import { ReadGroupsController } from "./Controller/ReadGroupController";
 import { ReadGroupsByUserController } from "./Controller/ReadGroupsByUserController";
+import { ReadMessagesPerGroupController } from "./Controller/ReadMessagesPerGroup";
 import { ReadUserController } from "./Controller/ReadUserController";
 
 
@@ -17,7 +18,7 @@ const addUserToGroup            = new AddUserToGroupController();
 const createGroupAndAddUsers    = new CreateGroupAndAddUsersController();
 const readGroupsByUser          = new ReadGroupsByUserController();
 const readUser                  = new ReadUserController();
-const ReadMessagesPerGroup      = new ReadGroupsByUserController();
+const ReadMessagesPerGroup      = new ReadMessagesPerGroupController();
 const CreateMessagePerGroup     = new CreateMessagePerGroupController();
 const ReadGroups                = new ReadGroupsController();
 

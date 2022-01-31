@@ -11,7 +11,6 @@ const GroupContext = React.createContext({} as IGroupContext);
 export const GroupContextProvider : React.FC = ({children}) => {
     const [groupSelected, setGroupSelected] = React.useState<IGroup>();
 
-    
 
     return(
         <GroupContext.Provider value={{groupSelected : groupSelected, setGroupSelected : setGroupSelected}}>

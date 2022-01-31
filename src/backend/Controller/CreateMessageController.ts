@@ -5,7 +5,7 @@ export class CreateMessagePerGroupController {
   async handle(request: Request, response: Response) {
     const { text, groupId } = request.body;
 
-    const user = await prismaClient.message.create({
+    const message = await prismaClient.message.create({
       data : {
         text : text,
         chat : {
@@ -20,6 +20,6 @@ export class CreateMessagePerGroupController {
       }
     });
 
-    return response.json(user);
+    return response.json(message);
   }
 }
