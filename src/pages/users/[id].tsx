@@ -1,8 +1,9 @@
 import getRequest from "frontend/api/requests/getRequest";
-import Chat from "frontend/components/Chat";
 import Groups from "frontend/components/Groups";
 import MainChat from "frontend/components/MainChat";
 import { GroupContextProvider } from "frontend/context/GroupContext";
+import { SocketContextProvider } from "frontend/context/SocketContext";
+import { UserContextProvider } from "frontend/context/UserContext";
 import { GetServerSideProps, InferGetServerSidePropsType } from "next";
 import * as React from "react"
 import { SWRConfig } from "swr";
@@ -19,24 +20,28 @@ export const getServerSideProps : GetServerSideProps = async (context) => {
     const groups = await getRequest("/groups/users/", num);
 
     return {
-        props : { groups }
+        props : { groups : groups, userId : num }
     }
 }
 
-export default function User({groups} : InferGetServerSidePropsType<typeof getServerSideProps>) {
+export default function User({groups, userId} : InferGetServerSidePropsType<typeof getServerSideProps>) {
 
     return (
         <SWRConfig>
-            <GroupContextProvider>
-                <div>
-                    <div>
-                        <Groups groups={groups}/>
-                    </div>
-                    <div>
-                        <MainChat />
-                    </div>
-                </div>
-            </GroupContextProvider>
+            <SocketContextProvider>
+                <GroupContextProvider>
+                    <UserContextProvider>
+                        <div>
+                            <div>
+                                <Groups groups={groups}/>
+                            </div>
+                            <div>
+                                <MainChat userId={userId}/>
+                            </div>
+                        </div>
+                    </UserContextProvider>
+                </GroupContextProvider>
+            </SocketContextProvider>
         </SWRConfig>
     )
 }

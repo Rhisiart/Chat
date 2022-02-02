@@ -1,16 +1,12 @@
 import { Groups, User } from ".prisma/client";
-import { Server } from "socket.io";
-import { DefaultEventsMap } from "socket.io/dist/typed-events";
 
 export class Room
 {
-    io : Server<DefaultEventsMap, DefaultEventsMap, DefaultEventsMap, any>;
-    group : Groups;
-    users : User[] = [];
+    private group : Groups;
+    private users : User[] = [];
     
-    constructor(io : Server<DefaultEventsMap, DefaultEventsMap, DefaultEventsMap, any>, group : Groups)
+    constructor(group : Groups)
     {
-        this.io = io;
         this.group = group;
     }
 
@@ -27,10 +23,5 @@ export class Room
     deleteUser(user : User)
     {
         this.users = this.users.filter(user => user.id !== user.id);
-    }
-
-    create()
-    {
-        
     }
 }

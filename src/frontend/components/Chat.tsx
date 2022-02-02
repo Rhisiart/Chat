@@ -1,20 +1,24 @@
-import getRequest from "frontend/api/requests/getRequest";
 import postRequest from "frontend/api/requests/postRequest";
-import { useGlobalContext } from "frontend/context/GroupContext";
+import { useSocketContext } from "frontend/context/SocketContext";
 import { IGroup } from "frontend/models/group";
 import { IMessage, IMessageGroup } from "frontend/models/message";
 import * as React from "react"
 import { FaLocationArrow } from "react-icons/fa";
-import useSWR from "swr";
-
 
 interface IProps {
     group : IGroup,
-    messages : IMessage[]
+    messages : IMessage[],
+    userId : number
 }
 
-const Chat : React.FC<IProps> = ({group, messages}) => {
+const Chat : React.FC<IProps> = ({group, messages, userId}) => {
+    const { socket } = useSocketContext();
+
     const [message, setMessage] = React.useState<string>();
+
+    React.useEffect(() => {
+        socket.emit("join", {groupId : group.id, userId :  userId});
+    }, [group, userId, socket])
 
     const handleOnClickSend = async (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
         try {

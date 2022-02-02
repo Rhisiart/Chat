@@ -19,6 +19,6 @@ export const GroupContextProvider : React.FC = ({children}) => {
     )
 }
 
-export const useGlobalContext = () : IGroupContext => {
+export const useGroupContext = () : IGroupContext => {
     return React.useContext(GroupContext);
 }

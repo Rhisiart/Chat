@@ -1,6 +1,7 @@
-import { useGlobalContext } from "frontend/context/GroupContext";
+import { useGroupContext } from "frontend/context/GroupContext";
 import { IGroup } from "frontend/models/group";
-import * as React from "react"
+import { io } from "socket.io-client";
+import * as React from "react";
 
 
 interface IProps {
@@ -8,7 +9,7 @@ interface IProps {
 }
 
 const Group : React.FC<IProps> = ({group}) => {
-    const { setGroupSelected } = useGlobalContext();
+    const { setGroupSelected } = useGroupContext();
 
     const handleOnClick = (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
         setGroupSelected(group);
