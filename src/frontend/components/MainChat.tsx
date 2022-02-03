@@ -7,19 +7,19 @@ import Chat from "./Chat";
 
 
 interface IProps {
-    userId : number
+
 }
 
-const MainChat : React.FC<IProps> = ({userId}) => {
-    const { groupSelected } = useGroupContext();
+const MainChat : React.FC<IProps> = () => {
+    const { group } = useGroupContext();
 
-    const { data, error } = useSWR<IMessage[]>(groupSelected ? ["/messages/", groupSelected.id] : null, getRequest);
+    const { data, error } = useSWR<IMessage[]>(group ? ["/messages/", group.id] : null, getRequest);
 
     return (
        <div>
            {
-               data && groupSelected ?
-                    <Chat group={groupSelected} messages={data} userId={userId}/>
+               data && group ?
+                    <Chat messages={data} />
                     :
                     null
            }

@@ -2,18 +2,21 @@ import { IGroup } from "frontend/models/group";
 import React from "react";
 
 export interface IGroupContext {
-    setGroupSelected: React.Dispatch<React.SetStateAction<IGroup | undefined>>,
-    groupSelected: IGroup | undefined
+    setGroup: React.Dispatch<React.SetStateAction<IGroup | undefined>>
+    setGroups: React.Dispatch<React.SetStateAction<IGroup[] | undefined>>,
+    groups : IGroup[] | undefined,
+    group: IGroup | undefined
 }
 
 const GroupContext = React.createContext({} as IGroupContext);
 
 export const GroupContextProvider : React.FC = ({children}) => {
-    const [groupSelected, setGroupSelected] = React.useState<IGroup>();
+    const [groups, setGroups] = React.useState<IGroup[]>();
+    const [group, setGroup] = React.useState<IGroup>();
 
 
     return(
-        <GroupContext.Provider value={{groupSelected : groupSelected, setGroupSelected : setGroupSelected}}>
+        <GroupContext.Provider value={{groups : groups, setGroups : setGroups, group : group, setGroup : setGroup}}>
             {children}
         </GroupContext.Provider>
     )

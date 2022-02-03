@@ -1,28 +1,31 @@
 import postRequest from "frontend/api/requests/postRequest";
+import { useGroupContext } from "frontend/context/GroupContext";
 import { useSocketContext } from "frontend/context/SocketContext";
-import { IGroup } from "frontend/models/group";
+import { useUserContext } from "frontend/context/UserContext";
 import { IMessage, IMessageGroup } from "frontend/models/message";
 import * as React from "react"
 import { FaLocationArrow } from "react-icons/fa";
 
 interface IProps {
-    group : IGroup,
-    messages : IMessage[],
-    userId : number
+    messages : IMessage[]
 }
 
-const Chat : React.FC<IProps> = ({group, messages, userId}) => {
-    const { socket } = useSocketContext();
+const Chat : React.FC<IProps> = ({messages}) => {
+    const { socket }    =  useSocketContext();
+    const { user }      =  useUserContext();
+    const { group }     =  useGroupContext();
 
     const [message, setMessage] = React.useState<string>();
 
     React.useEffect(() => {
-        socket.emit("join", {groupId : group.id, userId :  userId});
-    }, [group, userId, socket])
+        if(!group || !user) return;
+
+        socket.emit("join", {groupId : group.id, userId :  user.id});
+    }, [group, socket, user])
 
     const handleOnClickSend = async (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
         try {
-            if(!message) return;
+            if(!message || ! group) return;
 
             const response = await postRequest<IMessageGroup>("/messages", {text : message, groupId : group.id});
         } catch (error) {

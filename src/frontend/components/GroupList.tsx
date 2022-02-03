@@ -1,20 +1,22 @@
+import { useGroupContext } from "frontend/context/GroupContext";
 import { IGroup } from "frontend/models/group";
 import * as React from "react"
 import Group from "./Group";
 
 interface IProps {
-    groups : IGroup[]
+    
 }
 
 export interface IGroupList {
     filterGroupList: (text: string | undefined) => void
 } 
 
-const GroupList = React.forwardRef<IGroupList, IProps>(({groups}, ref) => {
-    const [groupsList, setGroupsList] = React.useState<IGroup[]>(groups);
+const GroupList = React.forwardRef<IGroupList, IProps>(({}, ref) => {
+    const { groups } = useGroupContext();
+    const [groupsList, setGroupsList] = React.useState<IGroup[] | undefined>(groups);
 
     const filterGroupList = React.useCallback((text : string | undefined) => {
-        setGroupsList(text ? groups.filter(group => group.name.toLocaleLowerCase().indexOf(text) > -1 || group.name.indexOf(text) > -1 || group.name.toLocaleUpperCase().indexOf(text) > -1) : groups);
+        setGroupsList(text && groups ? groups.filter(group => group.name.toLocaleLowerCase().indexOf(text) > -1 || group.name.indexOf(text) > -1 || group.name.toLocaleUpperCase().indexOf(text) > -1) : groups);
     }, [groups])
 
     React.useImperativeHandle(ref, () => ({
@@ -24,9 +26,12 @@ const GroupList = React.forwardRef<IGroupList, IProps>(({groups}, ref) => {
     return (
         <div>
            {
-               groupsList.map(group => {
-                   return <Group key={group.id} group={group} />
-               })
+               groupsList ? 
+                    groupsList.map(group => {
+                        return <Group key={group.id} group={group} />
+                    })
+                    :
+                    "0"
            }
         </div>
     )

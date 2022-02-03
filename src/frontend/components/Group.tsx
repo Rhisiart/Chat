@@ -9,10 +9,10 @@ interface IProps {
 }
 
 const Group : React.FC<IProps> = ({group}) => {
-    const { setGroupSelected } = useGroupContext();
+    const { setGroup } = useGroupContext();
 
     const handleOnClick = (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
-        setGroupSelected(group);
+        setGroup(group);
     }
 
     return (
