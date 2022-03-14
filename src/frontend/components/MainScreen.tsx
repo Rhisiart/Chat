@@ -6,21 +6,22 @@ import * as React from "react"
 import Groups from "./Groups";
 import MainChat from "./MainChat";
 
-
-
 interface IProps {
     groups : IGroup[],
     user : IUser
 }
 
 const MainScreen : React.FC<IProps> = ({groups, user}) => {
-    const { setGroups } = useGroupContext()
+    const { setGroups } = useGroupContext();
     const { setUser }   = useUserContext();
 
     React.useEffect(() => {
         setGroups(groups);
+    }, [groups]);
+
+    React.useEffect(() => {
         setUser(user);
-    }, [groups, user, setGroups, setUser])
+    }, [user])
 
     return (
         <div>

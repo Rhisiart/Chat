@@ -9,7 +9,7 @@ export interface IUserContext {
 const UserContext = React.createContext({} as IUserContext);
 
 export const UserContextProvider : React.FC = ({children}) => {
-    const [user, setUser] = React.useState<IUser>()
+    const [user, setUser] = React.useState<IUser>();
 
     return(
         <UserContext.Provider value={{user : user, setUser : setUser}}>

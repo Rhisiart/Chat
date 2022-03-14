@@ -13,7 +13,7 @@ export interface IGroupList {
 
 const GroupList = React.forwardRef<IGroupList, IProps>(({}, ref) => {
     const { groups } = useGroupContext();
-    const [groupsList, setGroupsList] = React.useState<IGroup[] | undefined>(groups);
+    const [groupsList, setGroupsList] = React.useState<IGroup[]>();
 
     const filterGroupList = React.useCallback((text : string | undefined) => {
         setGroupsList(text && groups ? groups.filter(group => group.name.toLocaleLowerCase().indexOf(text) > -1 || group.name.indexOf(text) > -1 || group.name.toLocaleUpperCase().indexOf(text) > -1) : groups);
@@ -22,6 +22,10 @@ const GroupList = React.forwardRef<IGroupList, IProps>(({}, ref) => {
     React.useImperativeHandle(ref, () => ({
         filterGroupList
     }), [filterGroupList])
+
+    React.useEffect(() => {
+        setGroupsList(groups);
+    }, [groups]);
 
     return (
         <div>
