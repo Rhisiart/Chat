@@ -20,7 +20,7 @@ const Chat : React.FC<IProps> = ({messages}) => {
     React.useEffect(() => {
         if(!group || !user) return;
 
-        socket.emit("join", {groupId : group.id, userId :  user.id});
+        socket.emit("join", {group : group, user :  user});
     }, [group, socket, user])
 
     const handleOnClickSend = async (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
