@@ -4,8 +4,8 @@ import { router } from "./routes";
 import cors from "cors";
 import { createServer } from "http";
 import { Server } from "socket.io"
-import { DefaultEventsMap } from "socket.io/dist/typed-events";
 import { ClientToServerEvents, IData, InterServerEvents, ServerToClientEvents } from "./model/Socket";
+import RoomServer from "./Socket/RoomServer";
 
 dotenv.config({path : "../.env"});
 
@@ -17,6 +17,7 @@ const io = new Server<ClientToServerEvents, ServerToClientEvents, InterServerEve
         origin : "*"
     }
 });
+const roomServer = RoomServer.getInstance();
 
 app.use(cors({
     origin: "*"
@@ -27,8 +28,22 @@ app.use(router);
 
 io.on("connection", socket => {
     socket.on("join", args => {
-        console.log(args.group);
-        console.log(socket.id);
+
+        socket.data.group = args.group;
+        socket.data.user = args.user;
+
+        socket.join(args.group.id.toString());
+        roomServer.join(args.group, args.user);
+    });
+
+    socket.on("sendMessage", (message, group, user) => {
+        roomServer.sendMessage(io, message, group, user);
+    });
+
+    socket.on("disconnect", args => {
+        if(!socket.data.group || !socket.data.user) return;
+
+        roomServer.disconnect(socket.data.group, socket.data.user);
     });
 });
 

@@ -1,16 +1,16 @@
+import { ClientToServerEvents, ServerToClientEvents } from "backend/model/Socket";
 import React from "react";
 import { io, Socket } from "socket.io-client";
-import { DefaultEventsMap } from "socket.io/dist/typed-events";
 
 export interface ISocketContext {
-    socket: Socket<DefaultEventsMap, DefaultEventsMap>
+    socket: Socket<ServerToClientEvents, ClientToServerEvents>
 }
 
 const SocketContext = React.createContext({} as ISocketContext);
 
 
 export const SocketContextProvider : React.FC = ({children}) => {
-    const socket = io("http://localhost:4000", {transports : ["websocket", "polling"]});
+    const socket : Socket<ServerToClientEvents, ClientToServerEvents> = io("http://localhost:4000", {transports : ["websocket", "polling"]});
 
     return(
         <SocketContext.Provider value={{socket : socket}}>

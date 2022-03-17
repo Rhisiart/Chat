@@ -1,13 +1,13 @@
+import { Message } from ".prisma/client";
 import postRequest from "frontend/api/requests/postRequest";
 import { useGroupContext } from "frontend/context/GroupContext";
 import { useSocketContext } from "frontend/context/SocketContext";
 import { useUserContext } from "frontend/context/UserContext";
-import { IMessage, IMessageGroup } from "frontend/models/message";
 import * as React from "react"
 import { FaLocationArrow } from "react-icons/fa";
 
 interface IProps {
-    messages : IMessage[]
+    messages : Message[]
 }
 
 const Chat : React.FC<IProps> = ({messages}) => {
@@ -28,6 +28,8 @@ const Chat : React.FC<IProps> = ({messages}) => {
             if(!message || ! group) return;
 
             const response = await postRequest<IMessageGroup>("/messages", {text : message, groupId : group.id});
+            
+            //socket.emit("sendMessage", )
         } catch (error) {
             console.log(error);
         }

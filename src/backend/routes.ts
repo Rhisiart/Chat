@@ -1,13 +1,13 @@
 import { Router } from "express";
-import { AddUserToGroupController } from "./Controller/AddUserToGroupController";
-import { CreateGroupAndAddUsersController } from "./Controller/CreateGroupAndAddUsers";
-import { CreateGroupsController } from "./Controller/CreateGroupsController";
-import { CreateMessagePerGroupController } from "./Controller/CreateMessageController";
-import { CreateUserController } from "./Controller/CreateUserController";
-import { ReadGroupsController } from "./Controller/ReadGroupController";
-import { ReadGroupsByUserController } from "./Controller/ReadGroupsByUserController";
-import { ReadMessagesPerGroupController } from "./Controller/ReadMessagesPerGroup";
-import { ReadUserController } from "./Controller/ReadUserController";
+import { AddUserToGroupController } from "./Controllers/AddUserToGroupController";
+import { CreateGroupAndAddUsersController } from "./Controllers/CreateGroupAndAddUsers";
+import { CreateGroupsController } from "./Controllers/CreateGroupsController";
+import { CreateMessagePerGroupController } from "./Controllers/CreateMessageController";
+import { CreateUserController } from "./Controllers/CreateUserController";
+import { ReadGroupsController } from "./Controllers/ReadGroupController";
+import { ReadGroupsByUserController } from "./Controllers/ReadGroupsByUserController";
+import { ReadMessagesPerGroupController } from "./Controllers/ReadMessagesPerGroup";
+import { ReadUserController } from "./Controllers/ReadUserController";
 
 
 const router = Router();

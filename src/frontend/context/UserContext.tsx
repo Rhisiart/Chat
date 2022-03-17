@@ -1,15 +1,15 @@
-import { IUser } from "frontend/models/user";
+import { User } from ".prisma/client";
 import React from "react";
 
 export interface IUserContext {
-    user: IUser | undefined,
-    setUser: React.Dispatch<React.SetStateAction<IUser | undefined>>
+    user: User | undefined,
+    setUser: React.Dispatch<React.SetStateAction<User | undefined>>
 }
 
 const UserContext = React.createContext({} as IUserContext);
 
 export const UserContextProvider : React.FC = ({children}) => {
-    const [user, setUser] = React.useState<IUser>();
+    const [user, setUser] = React.useState<User>();
 
     return(
         <UserContext.Provider value={{user : user, setUser : setUser}}>

@@ -20,9 +20,9 @@ class Room
         this.users.push(user);
     }
 
-    getUsers()
+    getUsers(user : User)
     {
-        return this.users;
+        return this.users.filter(user => user.id !== user.id);
     }
 
     removeUser(user : User)
