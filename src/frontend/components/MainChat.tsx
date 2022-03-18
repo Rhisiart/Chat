@@ -13,7 +13,25 @@ interface IProps {
 const MainChat : React.FC<IProps> = () => {
     const { group } = useGroupContext();
 
-    const { data, error } = useSWR<Message[]>(group ? [`/messages/${group.id}`] : null, getRequest);
+    const [data, setData] = React.useState<Message[]>();
+
+    const getMessages = React.useCallback(async (grp) => {
+        try {
+            const messages = await getRequest<Message[]>(`/messages/${grp.id}`);
+
+            setData(messages);
+        } catch (error) {
+            console.log(error);
+        }
+    }, [])
+
+    React.useEffect(() => {
+        if(!group) return;
+
+        getMessages(group);
+    }, [group])
+
+    //const { data, error } = useSWR<Message[]>(group ? [`/messages/${group.id}`] : null, getRequest);
 
     return (
        <div>

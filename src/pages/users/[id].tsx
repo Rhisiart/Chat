@@ -1,3 +1,4 @@
+import { Groups, User } from ".prisma/client";
 import getRequest from "frontend/api/requests/getRequest";
 import MainScreen from "frontend/components/MainScreen";
 import { GroupContextProvider } from "frontend/context/GroupContext";
@@ -16,8 +17,8 @@ export const getServerSideProps : GetServerSideProps = async (context) => {
 
     if(isNaN(num)) return { props : { error : undefined }};
 
-    const userRequest = getRequest(`users/${num}`);
-    const groupsRequest = getRequest(`/groups/users/${num}`);
+    const userRequest = getRequest<User>(`users/${num}`);
+    const groupsRequest = getRequest<Groups[]>(`/groups/users/${num}`);
 
     const [user, groups] = await Promise.all([userRequest, groupsRequest]);
 
@@ -26,7 +27,7 @@ export const getServerSideProps : GetServerSideProps = async (context) => {
     }
 }
 
-export default function User({groups, user} : InferGetServerSidePropsType<typeof getServerSideProps>) {
+export default function UserPage({groups, user} : InferGetServerSidePropsType<typeof getServerSideProps>) {
     return (
         <SWRConfig>
             <SocketContextProvider>
