@@ -1,8 +1,8 @@
 import axios from "../axios/axios"
 
-const getRequest = async (url : string, arg : number | undefined)  => {
+const getRequest = async (url : string)  => {
     try {
-        return await (await axios.get(`${url}${arg}`)).data;
+        return await (await axios.get(url)).data;
     } catch (error) {
         console.log(error);
     }

@@ -50,7 +50,7 @@ class RoomServer
         if(users.length === 0) return;
 
         users.map(user => {
-            io.to(group.id.toString()).emit("message", {user : user, text : message.text});
+            io.to(group.id.toString()).emit("message", {user : user, message : message});
         });
     }
 }

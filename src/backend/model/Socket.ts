@@ -9,7 +9,7 @@ export interface IData
 export interface IMessage
 {
     user : User,
-    text : string
+    message : Message
 }
 
 export interface ServerToClientEvents {
@@ -17,7 +17,7 @@ export interface ServerToClientEvents {
 }
   
 export interface ClientToServerEvents {
-    join: (data : IData) => void,
+    join: (group : Groups, user : User) => void,
     sendMessage : (message : Message, group : Groups, user : User) => void,
 }
   

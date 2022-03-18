@@ -3,6 +3,7 @@ import postRequest from "frontend/api/requests/postRequest";
 import { useGroupContext } from "frontend/context/GroupContext";
 import { useSocketContext } from "frontend/context/SocketContext";
 import { useUserContext } from "frontend/context/UserContext";
+import { IMessage } from "frontend/Model/Request";
 import * as React from "react"
 import { FaLocationArrow } from "react-icons/fa";
 
@@ -16,20 +17,29 @@ const Chat : React.FC<IProps> = ({messages}) => {
     const { group }     =  useGroupContext();
 
     const [message, setMessage] = React.useState<string>();
+    const [messageList, setMessageList] = React.useState<Message[]>(messages);
 
     React.useEffect(() => {
         if(!group || !user) return;
 
-        socket.emit("join", {group : group, user :  user});
+        socket.emit("join", group, user);
     }, [group, socket, user])
+
+    React.useEffect(() => {
+        socket.on("message", message => {
+            setMessageList(msg => [...msg, message.message]);
+        });
+    }, [socket])
 
     const handleOnClickSend = async (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
         try {
-            if(!message || ! group) return;
+            if(!message || !group || !user) return;
 
-            const response = await postRequest<IMessageGroup>("/messages", {text : message, groupId : group.id});
+            const response = await postRequest<Message,IMessage>("/messages", {text : message, groupId : group.id});
             
-            //socket.emit("sendMessage", )
+            if(!response) return;
+
+            socket.emit("sendMessage", response, group, user);
         } catch (error) {
             console.log(error);
         }
@@ -42,8 +52,8 @@ const Chat : React.FC<IProps> = ({messages}) => {
     return (
         <div>
             {
-                messages ?
-                    messages.map(message => {
+                messageList ?
+                    messageList.map(message => {
                         return <div key={message.id}>{message.text}</div>
                     })
                     :

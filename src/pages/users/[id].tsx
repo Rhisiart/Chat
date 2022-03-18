@@ -1,8 +1,9 @@
+import { UserStatus } from ".prisma/client";
 import getRequest from "frontend/api/requests/getRequest";
 import MainScreen from "frontend/components/MainScreen";
-import { GroupContextProvider, useGroupContext } from "frontend/context/GroupContext";
+import { GroupContextProvider } from "frontend/context/GroupContext";
 import { SocketContextProvider } from "frontend/context/SocketContext";
-import { UserContextProvider, useUserContext } from "frontend/context/UserContext";
+import { UserContextProvider } from "frontend/context/UserContext";
 import { GetServerSideProps, InferGetServerSidePropsType } from "next";
 import * as React from "react"
 import { SWRConfig } from "swr";
@@ -16,7 +17,7 @@ export const getServerSideProps : GetServerSideProps = async (context) => {
 
     if(isNaN(num)) return { props : { error : undefined }};
 
-    const groups = await getRequest("/groups/users/", num);
+    const groups = await getRequest(`/groups/users/${num}`);
 
     return {
         props : { groups : groups, userId : num }
@@ -29,7 +30,7 @@ export default function User({groups, userId} : InferGetServerSidePropsType<type
             <SocketContextProvider>
                 <GroupContextProvider>
                     <UserContextProvider>
-                        <MainScreen groups={groups} user={{name : "for now", email : "for now", id : userId}}/>
+                        <MainScreen groups={groups} user={{name : "for now", email : "for now", id : userId, status : UserStatus.Online}}/>
                     </UserContextProvider>
                 </GroupContextProvider>
             </SocketContextProvider>

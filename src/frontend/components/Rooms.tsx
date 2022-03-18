@@ -3,11 +3,9 @@ import GroupList, { IGroupList } from "./GroupList";
 import SearchBar from "./SearchBar";
 
 
-interface IProps {
-    
-}
+interface IProps {}
 
-const Groups : React.FC<IProps> = () => {
+const Rooms : React.FC<IProps> = () => {
     const groupListRef = React.useRef<IGroupList>(null);
 
     return (
@@ -22,4 +20,4 @@ const Groups : React.FC<IProps> = () => {
     )
 }
 
-export default React.memo(Groups);
+export default React.memo(Rooms);

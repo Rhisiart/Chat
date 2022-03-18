@@ -1,11 +1,10 @@
 import { useGroupContext } from "frontend/context/GroupContext";
-import { IGroup } from "frontend/models/group";
-import { io } from "socket.io-client";
 import * as React from "react";
+import { Groups } from ".prisma/client";
 
 
 interface IProps {
-    group : IGroup,
+    group : Groups,
 }
 
 const Group : React.FC<IProps> = ({group}) => {

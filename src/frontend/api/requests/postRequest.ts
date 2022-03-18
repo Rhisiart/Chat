@@ -1,8 +1,8 @@
 import axios from "../axios/axios"
 
-const postRequest = async <T>(url : string, body : T)  => {
+const postRequest = async <T, Y>(url : string, body : Y) : Promise<T | undefined>  => {
     try {
-        return await axios.post(url, body);
+        return await (await axios.post(url, body)).data;
     } catch (error) {
         console.log(error);
     }

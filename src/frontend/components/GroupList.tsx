@@ -1,11 +1,9 @@
+import { Groups } from ".prisma/client";
 import { useGroupContext } from "frontend/context/GroupContext";
-import { IGroup } from "frontend/models/group";
 import * as React from "react"
 import Group from "./Group";
 
-interface IProps {
-    
-}
+interface IProps {}
 
 export interface IGroupList {
     filterGroupList: (text: string | undefined) => void
@@ -13,7 +11,7 @@ export interface IGroupList {
 
 const GroupList = React.forwardRef<IGroupList, IProps>(({}, ref) => {
     const { groups } = useGroupContext();
-    const [groupsList, setGroupsList] = React.useState<IGroup[]>();
+    const [groupsList, setGroupsList] = React.useState<Groups[]>();
 
     const filterGroupList = React.useCallback((text : string | undefined) => {
         setGroupsList(text && groups ? groups.filter(group => group.name.toLocaleLowerCase().indexOf(text) > -1 || group.name.indexOf(text) > -1 || group.name.toLocaleUpperCase().indexOf(text) > -1) : groups);

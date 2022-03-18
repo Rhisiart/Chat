@@ -1,14 +1,13 @@
+import { Groups, User } from ".prisma/client";
 import { useGroupContext } from "frontend/context/GroupContext";
 import { useUserContext } from "frontend/context/UserContext";
-import { IGroup } from "frontend/models/group";
-import { IUser } from "frontend/models/user";
 import * as React from "react"
-import Groups from "./Groups";
+import Rooms from "./Rooms";
 import MainChat from "./MainChat";
 
 interface IProps {
-    groups : IGroup[],
-    user : IUser
+    groups : Groups[],
+    user : User
 }
 
 const MainScreen : React.FC<IProps> = ({groups, user}) => {
@@ -26,7 +25,7 @@ const MainScreen : React.FC<IProps> = ({groups, user}) => {
     return (
         <div>
             <div>
-                <Groups />
+                <Rooms />
             </div>
             <div>
                 <MainChat />

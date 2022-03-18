@@ -27,13 +27,12 @@ app.use(router);
 
 
 io.on("connection", socket => {
-    socket.on("join", args => {
+    socket.on("join", (group, user) => {
+        socket.data.group = group;
+        socket.data.user = user;
 
-        socket.data.group = args.group;
-        socket.data.user = args.user;
-
-        socket.join(args.group.id.toString());
-        roomServer.join(args.group, args.user);
+        socket.join(group.id.toString());
+        roomServer.join(group, user);
     });
 
     socket.on("sendMessage", (message, group, user) => {
