@@ -39,7 +39,9 @@ const Chat : React.FC<IProps> = ({messages}) => {
             
             if(!response) return;
 
-            socket.emit("sendMessage", response, group, user);
+            //setMessageList(msg => [...msg, response]);
+            setMessage("");
+            socket.emit("sendMessage", response, group, user);            
         } catch (error) {
             console.log(error);
         }

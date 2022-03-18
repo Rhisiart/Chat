@@ -27,8 +27,6 @@ class RoomServer
     {
         const room = this.getRoom(group);
 
-        console.log(`room = ${room ? true : false}`);
-
         !room ? this.rooms.push(new Room(group, user)) : room.addUser(user); 
     }
 
@@ -43,17 +41,7 @@ class RoomServer
 
     sendMessage(io: Server<ClientToServerEvents, ServerToClientEvents, InterServerEvents, IData>, message : Message, group : Groups, user : User)
     {
-        const room = this.getRoom(group);
-
-        if(!room) return;
-
-        const users = room.getUsers(user);
-
-        if(users.length === 0) return;
-
-        users.map(user => {
-            io.to(group.id.toString()).emit("message", {user : user, message : message});
-        });
+        io.to(group.id.toString()).emit("message", {user : user, message : message});
     }
 }
 

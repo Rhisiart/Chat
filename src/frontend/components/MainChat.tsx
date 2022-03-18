@@ -6,9 +6,7 @@ import useSWR from "swr";
 import Chat from "./Chat";
 
 
-interface IProps {
-
-}
+interface IProps {}
 
 const MainChat : React.FC<IProps> = () => {
     const { group } = useGroupContext();
@@ -18,6 +16,8 @@ const MainChat : React.FC<IProps> = () => {
     const getMessages = React.useCallback(async (grp) => {
         try {
             const messages = await getRequest<Message[]>(`/messages/${grp.id}`);
+
+            if(messages) messages.sort((a,b) => (a.id > b.id) ? 1 : ((b.id > a.id) ? -1 : 0));
 
             setData(messages);
         } catch (error) {
