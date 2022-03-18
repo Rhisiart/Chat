@@ -22,7 +22,7 @@ class Room
 
     getUsers(user : User)
     {
-        return this.users.filter(user => user.id !== user.id);
+        return this.users.filter(u => u.id !== user.id);
     }
 
     removeUser(user : User)

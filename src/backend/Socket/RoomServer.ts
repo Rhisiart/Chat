@@ -27,6 +27,8 @@ class RoomServer
     {
         const room = this.getRoom(group);
 
+        console.log(`room = ${room ? true : false}`);
+
         !room ? this.rooms.push(new Room(group, user)) : room.addUser(user); 
     }
 

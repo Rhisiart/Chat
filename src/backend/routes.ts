@@ -8,7 +8,7 @@ import { ReadGroupsController } from "./Controllers/ReadGroupController";
 import { ReadGroupsByUserController } from "./Controllers/ReadGroupsByUserController";
 import { ReadMessagesPerGroupController } from "./Controllers/ReadMessagesPerGroup";
 import { ReadUserController } from "./Controllers/ReadUserController";
-
+import {ReadUserByIdController} from "./Controllers/ReadUserByIdController";
 
 const router = Router();
 
@@ -21,9 +21,11 @@ const readUser                  = new ReadUserController();
 const ReadMessagesPerGroup      = new ReadMessagesPerGroupController();
 const CreateMessagePerGroup     = new CreateMessagePerGroupController();
 const ReadGroups                = new ReadGroupsController();
+const ReadUserById              = new ReadUserByIdController();
 
 router.post("/users", createUser.handle);
 router.get("/users", readUser.handle);
+router.get("/users/:id", ReadUserById.handle);
 router.post("/groups", createGroups.handle);
 router.post("/groups/users", createGroupAndAddUsers.handle);
 router.get("/groups/users/:id", readGroupsByUser.handle);
